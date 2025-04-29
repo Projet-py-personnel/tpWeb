@@ -16,9 +16,18 @@ Line.prototype.paint = function(ctx){
    ctx.stroke();
 }
 
-Drawing.prototype.paint = function(ctx , canvas){
-    ctx.fillStyle = '#F0F0F0'
+//Drawing.prototype.paint = function(ctx, canvas){
+  //  ctx.fillStyle = '#F0F0F0'
+    //ctx.fillRect(0 , 0 , canvas.width , canvas.height)
+    //this.ShapeArray.forEach(element => element.paint(ctx))
+//}
 
-    ctx.fillRect(0 , 0 , canvas.with , canvas.height)
-    this.ShapeArray.ForEach(element => element.paint(ctx))
-}
+
+Drawing.prototype.paint = function(ctx) {
+    // Efface le canvas et définit la couleur de fond
+    ctx.fillStyle = '#F0F0F0';
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+    // Dessine chaque forme stockée dans l'array `shapes`
+    this.shapes.forEach(shape => shape.paint(ctx));
+};

@@ -12,6 +12,25 @@ function Pencil(ctx, drawing, canvas) {
 	new DnD(canvas, this);
 
 	// Implémentez ici les 3 fonctions onInteractionStart, onInteractionUpdate et onInteractionEnd
+
+    this.onInteractionStart = function(dnd){
+        this.currentShape = new Rectangle();
+    }
+
+    this.onInteractionUpdate = function(dnd){
+        this.currentShape = new Rectangle(dnd.startX , dnd.startY , dnd.currColour , this.currLineWidth, dnd.endX , dnd.endY);
+        this.currentShape.paint(ctx)
+
+    }
+
+    this.onInteractionEnd= function(dnd){
+        this.currentShape = new Rectangle(dnd.startX , dnd.startY , dnd.currColour , this.currLineWidth,dnd.endX , dnd.endY);
+        this.currentShape.paint(ctx)
+
+    }
+
+
+
 };
 
 

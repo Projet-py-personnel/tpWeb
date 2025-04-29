@@ -1,14 +1,14 @@
 
 // La création d'un Dnd requière un canvas et un interacteur.
 // L'interacteur viendra dans un second temps donc ne vous en souciez pas au départ.
-function DnD(canvas, interactor) {
+function DnD(canvas, interact) {
 	// Définir ici les attributs de la 'classe'
         this.startX = 0; // Position initiale X
         this.startY = 0; // Position initiale Y
         this.endX = 0;   // Position finale X
         this.endY = 0;   // Position finale Y
         this.isClicked = false; // Indique si un Drag est en cours
-
+        this.interact = interact;
         this.canvas = canvas; // Stocker le canvas
 	// Developper les 3 fonctions gérant les événements
 
@@ -37,17 +37,18 @@ DnD.prototype.press = function(evt) {
     this.startX = pos.x;
     this.startY = pos.y;
     this.isDragging = true;
-    console.log(`Début du Drag: (${this.startX}, ${this.startY})`);
-};
+    this.interact.onInteractionStart(this)
+    //console.log(`Début du Drag: (${this.startX}, ${this.startY})`);
+}.bind(this);
 
 DnD.prototype.move = function(evt) {
     if (this.isClicked) {
         var pos = getMousePosition(this.canvas, evt);
         this.endX = pos.x;
         this.endY = pos.y;
-        console.log(`En cours: (${this.endX}, ${this.endY})`);
+        this.interact.onInteractionUpdate(this)
     }
-};
+}.bind(this);
 
 DnD.prototype.release = function(evt) {
     if (this.isClicked) {
@@ -55,8 +56,9 @@ DnD.prototype.release = function(evt) {
         this.endX = pos.x;
         this.endY = pos.y;
         this.isClicked = false;
-        console.log(`Fin du Drag: (${this.endX}, ${this.endY})`);
+        this.interact.onInteractionEnd(this)
+
     }
-};
+}.bind(this);
 
 
